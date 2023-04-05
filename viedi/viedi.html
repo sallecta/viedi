@@ -1,0 +1,27 @@
+<!-- forked from https://github.com/quilljs/quill -->
+<!-- Include Viedi stylesheet -->
+<link href="viedi.css" rel="stylesheet" />
+
+
+<!-- Create the editor container -->
+<div id="editor">
+  <p>Hello World!</p>
+</div>
+
+<!-- Include the Viedi library -->
+<script src="viedi.js"></script>
+
+<!-- Initialize Viedi editor -->
+<script>
+var viedi = new Viedi('#editor', {
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      ['image', 'code-block']
+    ]
+  },
+  placeholder: 'Compose an epic...',
+  theme: 'snow' 
+});
+</script>

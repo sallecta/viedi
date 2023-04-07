@@ -4,7 +4,7 @@
 
 
 <!-- Create the editor container -->
-<div id="editor">
+<div id="editor">Team Maintainers may now disable notifications resulting from a team @mention in GitHub issue and pull request comments through an optional configuration in the team settings page. Notifications resulting from PR review requests are unaffected by this setting. Existing issue and PR subscriptions are also unaffected. This team setting will also be exposed via API.
 </div>
 
 <!-- Include the Viedi library -->
@@ -17,12 +17,18 @@ var viedi = new Viedi(
 	{
 		modules:
 		{
-			toolbar:
-			[
-			  [{ header: [1, 2, false] }],
-			  ['bold', 'italic', 'underline'],
-			  ['image', 'pre']
-			]
+			'toolbar': [
+				[{ 'font': ['sans-serif', 'serif', 'monospace'] }, { 'size': [] }],
+				[ 'bold', 'italic', 'underline', 'strike' ],
+				[{ 'color': [] }, { 'background': [] }],
+				[{ 'script': 'super' }, { 'script': 'sub' }],
+				[{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'pre' ],
+				[{ 'list': 'ordered' }, { 'list': 'unordered'}, { 'indent': '-1' }, { 'indent': '+1' }],
+				[ {'direction': 'rtl'}, { 'align': [] }],
+				['link', 'image', 'video'],
+				//['formula' ],
+				[ 'clean' ]
+			],
 		},
 		placeholder: 'Write content here.',
 		theme: 'snow' 

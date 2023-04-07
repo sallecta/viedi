@@ -4946,7 +4946,7 @@
 										image: op.attributes.image
 									}, attributes);
 								}
-								if (op.attributes != null && (op.attributes.list === true || op.attributes.bullet === true))
+								if (op.attributes != null && (op.attributes.list === true || op.attributes.unordered === true))
 								{
 									op = (0, _clone2.default)(op);
 									if (op.attributes.list)
@@ -4955,8 +4955,8 @@
 									}
 									else
 									{
-										op.attributes.list = 'bullet';
-										delete op.attributes.bullet;
+										op.attributes.list = 'unordered';
+										delete op.attributes.unordered;
 									}
 								}
 								if (typeof op.insert === 'string')
@@ -8967,7 +8967,7 @@
 								handler: function handler(range, context) {
 									var length = context.prefix.length;
 									this.viedi.scroll.deleteAt(range.index - length, length);
-									this.viedi.formatLine(range.index - length, 1, 'list', length === 1 ? 'bullet' : 'ordered', _viedi2.default.sources.USER);
+									this.viedi.formatLine(range.index - length, 1, 'list', length === 1 ? 'unordered' : 'ordered', _viedi2.default.sources.USER);
 									this.viedi.setSelection(range.index - length, _viedi2.default.sources.SILENT);
 								}
 							}
@@ -9508,7 +9508,7 @@
 							value: function create(value) {
 								if (value === 'ordered') {
 									value = 'OL';
-								} else if (value === 'bullet') {
+								} else if (value === 'unordered') {
 									value = 'UL';
 								}
 								return _get(List.__proto__ || Object.getPrototypeOf(List), 'create', this).call(this, value);
@@ -9517,7 +9517,7 @@
 							key: 'formats',
 							value: function formats(domNode) {
 								if (domNode.tagName === 'OL') return 'ordered';
-								if (domNode.tagName === 'UL') return 'bullet';
+								if (domNode.tagName === 'UL') return 'unordered';
 								return undefined;
 							}
 						}]);
@@ -10944,9 +10944,9 @@
 						'background': a_mload('emm74'),
 						'blockquote': a_mload('emm75'),
 						'bold': a_mload('emm76'),
-						'clean': a_mload('emm77'),
+						'clean': a_mload('i_clean'),
 						'pre': a_mload('i_pre'),
-						'color': a_mload('emm79'),
+						'color': a_mload('i_color'),
 						'direction': {
 							'': a_mload('emm80'),
 							'rtl': a_mload('emm81')
@@ -10971,7 +10971,7 @@
 						'link': a_mload('emm93'),
 						'list': {
 							'ordered': a_mload('emm94'),
-							'bullet': a_mload('emm95')
+							'unordered': a_mload('emm95')
 						},
 						'script': {
 							'sub': a_mload('emm96'),
@@ -11018,17 +11018,17 @@
 					a_module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=viedi-stroke d=M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z></path> <path class=viedi-stroke d=M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z></path> </svg>";
 				},
 				/* 77 */
-				emm77: function(a_module, a_exports)
+				i_clean: function(a_module, a_exports)
 				{
 					a_module.exports = "<svg class=\"\" viewbox=\"0 0 18 18\"> <line class=viedi-stroke x1=5 x2=13 y1=3 y2=3></line> <line class=viedi-stroke x1=6 x2=9.35 y1=12 y2=3></line> <line class=viedi-stroke x1=11 x2=15 y1=11 y2=15></line> <line class=viedi-stroke x1=15 x2=11 y1=11 y2=15></line> <rect class=viedi-fill height=1 rx=0.5 ry=0.5 width=7 x=2 y=14></rect> </svg>";
 				},
 				/* 78 */
-				emm78: function(a_module, a_exports)
+				i_src: function(a_module, a_exports)
 				{
 					a_module.exports = "<svg viewbox=\"0 0 18 18\"> <polyline class=\"viedi-even viedi-stroke\" points=\"5 7 3 9 5 11\"></polyline> <polyline class=\"viedi-even viedi-stroke\" points=\"13 7 15 9 13 11\"></polyline> <line class=viedi-stroke x1=10 x2=8 y1=5 y2=13></line> </svg>";
 				},
 				/* 79 */
-				emm79: function(a_module, a_exports)
+				i_color: function(a_module, a_exports)
 				{
 					a_module.exports = "<svg viewbox=\"0 0 18 18\"> <line class=\"viedi-color-label viedi-stroke viedi-transparent\" x1=3 x2=15 y1=15 y2=15></line> <polyline class=viedi-stroke points=\"5.5 11 9 3 12.5 11\"></polyline> <line class=viedi-stroke x1=11.63 x2=6.38 y1=9 y2=9></line> </svg>";
 				},
@@ -11905,7 +11905,7 @@
 						}]);
 						return BubbleTooltip;
 					}(_base.BaseTooltip);
-					BubbleTooltip.TEMPLATE = ['<span class="viedi-tooltip-arrow"></span>', '<div class="viedi-tooltip-editor">', '<input type="text" data-formula="e=mc^2" data-link="quilljs.com" data-video="Embed URL">', '<a class="viedi-close"></a>', '</div>'].join('');
+					BubbleTooltip.TEMPLATE = ['<span class="viedi-tooltip-arrow"></span>', '<div class="viedi-tooltip-editor">', '<input type="text" data-formula="e=mc^2" data-video="Embed URL">', '<a class="viedi-close"></a>', '</div>'].join('');
 					a_exports.default = BubbleTheme;
 				},
 				/* 107 */
@@ -12451,7 +12451,7 @@
 						[{
 							list: 'ordered'
 						}, {
-							list: 'bullet'
+							list: 'unordered'
 						}],
 						['clean']
 					];
@@ -12567,7 +12567,7 @@
 						}]);
 						return SnowTooltip;
 					}(_base.BaseTooltip);
-					SnowTooltip.TEMPLATE = ['<a class="viedi-preview" target="_blank" href="about:blank"></a>', '<input type="text" data-formula="e=mc^2" data-link="quilljs.com" data-video="Embed URL">', '<a class="viedi-action"></a>', '<a class="viedi-remove"></a>'].join('');
+					SnowTooltip.TEMPLATE = ['<a class="viedi-preview" target="_blank" href="about:blank"></a>', '<input type="text" data-formula="e=mc^2" data-video="Embed URL">', '<a class="viedi-action"></a>', '<a class="viedi-remove"></a>'].join('');
 					a_exports.default = SnowTheme;
 				}
 			}

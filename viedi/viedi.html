@@ -5,7 +5,6 @@
 
 <!-- Create the editor container -->
 <div id="editor">
-  <p>Hello World!</p>
 </div>
 
 <!-- Include the Viedi library -->
@@ -13,15 +12,21 @@
 
 <!-- Initialize Viedi editor -->
 <script>
-var viedi = new Viedi('#editor', {
-  modules: {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline'],
-      ['image', 'code-block']
-    ]
-  },
-  placeholder: 'Compose an epic...',
-  theme: 'snow' 
-});
+var viedi = new Viedi(
+	'#editor', 
+	{
+		modules:
+		{
+			toolbar:
+			[
+			  [{ header: [1, 2, false] }],
+			  ['bold', 'italic', 'underline'],
+			  ['image', 'code-block']
+			]
+		},
+		placeholder: 'Write content here.',
+		theme: 'snow' 
+	}
+);
+//console.log(['viedi instanse',viedi]);
 </script>

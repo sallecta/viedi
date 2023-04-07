@@ -1,9 +1,15 @@
 <!-- forked from https://github.com/quilljs/quill -->
 <!-- Include Viedi stylesheet -->
 <link href="viedi.css" rel="stylesheet" />
+<link href="viedi.bubble.css" rel="stylesheet" />
 
-
-<!-- Create the editor container -->
+<!-- Create the bubble editor container -->
+<div id="bubble-wrapper">
+            <div id="bubble-container">
+              <div class="editor">bubble-container .editor</div>
+            </div>
+          </div>
+<!-- Or create the editor container -->
 <div id="editor">Team Maintainers may now disable notifications resulting from a team @mention in GitHub issue and pull request comments through an optional configuration in the team settings page. Notifications resulting from PR review requests are unaffected by this setting. Existing issue and PR subscriptions are also unaffected. This team setting will also be exposed via API.
 </div>
 
@@ -12,6 +18,28 @@
 
 <!-- Initialize Viedi editor -->
 <script>
+var bubbleEditor = new Viedi(
+	'#bubble-container .editor',
+	{
+		bounds: '#bubble-container .editor',
+		modules: {
+			//'syntax': true
+			'toolbar': [
+				[{ 'font': ['sans-serif', 'serif', 'monospace'] }, { 'size': [] }],
+				[ 'bold', 'italic', 'underline', 'strike' ],
+				[{ 'color': [] }, { 'background': [] }],
+				[{ 'script': 'super' }, { 'script': 'sub' }],
+				[{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'pre' ],
+				[{ 'list': 'ordered' }, { 'list': 'unordered'}, { 'indent': '-1' }, { 'indent': '+1' }],
+				[ {'direction': 'rtl'}, { 'align': [] }],
+				['link', 'image', 'video'],
+				//['formula' ],
+				[ 'clean' ]
+			],
+		  },
+		  theme: 'bubble'
+	}
+);
 var viedi = new Viedi(
 	'#editor', 
 	{

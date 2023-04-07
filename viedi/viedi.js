@@ -143,7 +143,7 @@
 							'formats/font': _font.FontClass,
 							'formats/size': _size.SizeClass,
 							'formats/blockquote': _blockquote2.default,
-							'formats/code-block': _code2.default,
+							'formats/pre': _code2.default,
 							'formats/header': _header2.default,
 							'formats/list': _list2.default,
 							'formats/bold': _bold2.default,
@@ -5829,13 +5829,13 @@
 					}(_inline2.default);
 					Code.blotName = 'code';
 					Code.tagName = 'CODE';
-					var CodeBlock = function(_Block) {
-						_inherits(CodeBlock, _Block);
-						function CodeBlock() {
-							_classCallCheck(this, CodeBlock);
-							return _possibleConstructorReturn(this, (CodeBlock.__proto__ || Object.getPrototypeOf(CodeBlock)).apply(this, arguments));
+					var Pre = function(_Block) {
+						_inherits(Pre, _Block);
+						function Pre() {
+							_classCallCheck(this, Pre);
+							return _possibleConstructorReturn(this, (Pre.__proto__ || Object.getPrototypeOf(Pre)).apply(this, arguments));
 						}
-						_createClass(CodeBlock, [{
+						_createClass(Pre, [{
 							key: 'delta',
 							value: function delta() {
 								var _this3 = this;
@@ -5858,7 +5858,7 @@
 								if (text != null) {
 									text.deleteAt(text.length() - 1, 1);
 								}
-								_get(CodeBlock.prototype.__proto__ || Object.getPrototypeOf(CodeBlock.prototype), 'format', this).call(this, name, value);
+								_get(Pre.prototype.__proto__ || Object.getPrototypeOf(Pre.prototype), 'format', this).call(this, name, value);
 							}
 						}, {
 							key: 'formatAt',
@@ -5874,7 +5874,7 @@
 								var blot = this.isolate(prevNewline, isolateLength);
 								var next = blot.next;
 								blot.format(name, value);
-								if (next instanceof CodeBlock) {
+								if (next instanceof Pre) {
 									next.formatAt(0, index - prevNewline + length - isolateLength, name, value);
 								}
 							}
@@ -5914,7 +5914,7 @@
 								if (!this.domNode.textContent.endsWith('\n')) {
 									this.appendChild(_parchment2.default.create('text', '\n'));
 								}
-								_get(CodeBlock.prototype.__proto__ || Object.getPrototypeOf(CodeBlock.prototype), 'optimize', this).call(this);
+								_get(Pre.prototype.__proto__ || Object.getPrototypeOf(Pre.prototype), 'optimize', this).call(this);
 								var next = this.next;
 								if (next != null && next.prev === this && next.statics.blotName === this.statics.blotName && this.statics.formats(this.domNode) === next.statics.formats(next.domNode)) {
 									next.optimize();
@@ -5925,7 +5925,7 @@
 						}, {
 							key: 'replace',
 							value: function replace(target) {
-								_get(CodeBlock.prototype.__proto__ || Object.getPrototypeOf(CodeBlock.prototype), 'replace', this).call(this, target);
+								_get(Pre.prototype.__proto__ || Object.getPrototypeOf(Pre.prototype), 'replace', this).call(this, target);
 								[].slice.call(this.domNode.querySelectorAll('*')).forEach(function(node) {
 									var blot = _parchment2.default.find(node);
 									if (blot == null) {
@@ -5940,7 +5940,7 @@
 						}], [{
 							key: 'create',
 							value: function create(value) {
-								var domNode = _get(CodeBlock.__proto__ || Object.getPrototypeOf(CodeBlock), 'create', this).call(this, value);
+								var domNode = _get(Pre.__proto__ || Object.getPrototypeOf(Pre), 'create', this).call(this, value);
 								domNode.setAttribute('spellcheck', false);
 								return domNode;
 							}
@@ -5950,13 +5950,13 @@
 								return true;
 							}
 						}]);
-						return CodeBlock;
+						return Pre;
 					}(_block2.default);
-					CodeBlock.blotName = 'code-block';
-					CodeBlock.tagName = 'PRE';
-					CodeBlock.TAB = '  ';
+					Pre.blotName = 'pre';
+					Pre.tagName = 'PRE';
+					Pre.TAB = '  ';
 					a_exports.Code = Code;
-					a_exports.default = CodeBlock;
+					a_exports.default = Pre;
 				},
 				/* 33 */
 				emm33: function(a_module, a_exports, a_mload)
@@ -8912,8 +8912,8 @@
 									}
 								}
 							},
-							'indent code-block': makeCodeBlockHandler(true),
-							'outdent code-block': makeCodeBlockHandler(false),
+							'indent pre': makePreHandler(true),
+							'outdent pre': makePreHandler(false),
 							'remove tab': {
 								key: Keyboard.keys.TAB,
 								shiftKey: true,
@@ -8998,18 +8998,18 @@
 							_this3.viedi.format(name, context.format[name], _viedi2.default.sources.USER);
 						});
 					}
-					function makeCodeBlockHandler(indent) {
+					function makePreHandler(indent) {
 						return {
 							key: Keyboard.keys.TAB,
 							shiftKey: !indent,
 							format: {
-								'code-block': true
+								'pre': true
 							},
 							handler: function handler(range) {
-								var CodeBlock = _parchment2.default.query('code-block');
+								var Pre = _parchment2.default.query('pre');
 								var index = range.index,
 									length = range.length;
-								var _viedi$scroll$descend = this.viedi.scroll.descendant(CodeBlock, index);
+								var _viedi$scroll$descend = this.viedi.scroll.descendant(Pre, index);
 								var _viedi$scroll$descend2 = _slicedToArray(_viedi$scroll$descend, 2);
 								var block = _viedi$scroll$descend2[0];
 								var offset = _viedi$scroll$descend2[1];
@@ -9021,20 +9021,20 @@
 								offset = 0;
 								lines.forEach(function(line, i) {
 									if (indent) {
-										block.insertAt(start + offset, CodeBlock.TAB);
-										offset += CodeBlock.TAB.length;
+										block.insertAt(start + offset, Pre.TAB);
+										offset += Pre.TAB.length;
 										if (i === 0) {
-											index += CodeBlock.TAB.length;
+											index += Pre.TAB.length;
 										} else {
-											length += CodeBlock.TAB.length;
+											length += Pre.TAB.length;
 										}
-									} else if (line.startsWith(CodeBlock.TAB)) {
-										block.deleteAt(start + offset, CodeBlock.TAB.length);
-										offset -= CodeBlock.TAB.length;
+									} else if (line.startsWith(Pre.TAB)) {
+										block.deleteAt(start + offset, Pre.TAB.length);
+										offset -= Pre.TAB.length;
 										if (i === 0) {
-											index -= CodeBlock.TAB.length;
+											index -= Pre.TAB.length;
 										} else {
-											length -= CodeBlock.TAB.length;
+											length -= Pre.TAB.length;
 										}
 									}
 									offset += line.length + 1;
@@ -10410,7 +10410,7 @@
 					Object.defineProperty(a_exports, "__esModule", {
 						value: true
 					});
-					a_exports.default = a_exports.CodeToken = a_exports.CodeBlock = undefined;
+					a_exports.default = a_exports.CodeToken = a_exports.Pre = undefined;
 					var _createClass = function() {
 						function defineProperties(target, props) {
 							for (var i = 0; i < props.length; i++) {
@@ -10485,18 +10485,18 @@
 						});
 						if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 					}
-					var SyntaxCodeBlock = function(_CodeBlock) {
-						_inherits(SyntaxCodeBlock, _CodeBlock);
-						function SyntaxCodeBlock() {
-							_classCallCheck(this, SyntaxCodeBlock);
-							return _possibleConstructorReturn(this, (SyntaxCodeBlock.__proto__ || Object.getPrototypeOf(SyntaxCodeBlock)).apply(this, arguments));
+					var SyntaxPre = function(_Pre) {
+						_inherits(SyntaxPre, _Pre);
+						function SyntaxPre() {
+							_classCallCheck(this, SyntaxPre);
+							return _possibleConstructorReturn(this, (SyntaxPre.__proto__ || Object.getPrototypeOf(SyntaxPre)).apply(this, arguments));
 						}
-						_createClass(SyntaxCodeBlock, [{
+						_createClass(SyntaxPre, [{
 							key: 'replaceWith',
 							value: function replaceWith(block) {
 								this.domNode.textContent = this.domNode.textContent;
 								this.attach();
-								_get(SyntaxCodeBlock.prototype.__proto__ || Object.getPrototypeOf(SyntaxCodeBlock.prototype), 'replaceWith', this).call(this, block);
+								_get(SyntaxPre.prototype.__proto__ || Object.getPrototypeOf(SyntaxPre.prototype), 'replaceWith', this).call(this, block);
 							}
 						}, {
 							key: 'highlight',
@@ -10511,9 +10511,9 @@
 								}
 							}
 						}]);
-						return SyntaxCodeBlock;
+						return SyntaxPre;
 					}(_code2.default);
-					SyntaxCodeBlock.className = 'viedi-syntax';
+					SyntaxPre.className = 'viedi-syntax';
 					var CodeToken = new _parchment2.default.Attributor.Class('token', 'hljs', {
 						scope: _parchment2.default.Scope.INLINE
 					});
@@ -10526,7 +10526,7 @@
 								throw new Error('Syntax a_module requires highlight.js. Please include the library on the page before Viedi.');
 							}
 							_viedi2.default.register(CodeToken, true);
-							_viedi2.default.register(SyntaxCodeBlock, true);
+							_viedi2.default.register(SyntaxPre, true);
 							var timer = null;
 							_this2.viedi.on(_viedi2.default.events.SCROLL_OPTIMIZE, function() {
 								if (timer != null) return;
@@ -10544,7 +10544,7 @@
 								var _this3 = this;
 								if (this.viedi.selection.composing) return;
 								var range = this.viedi.getSelection();
-								this.viedi.scroll.descendants(SyntaxCodeBlock).forEach(function(code) {
+								this.viedi.scroll.descendants(SyntaxPre).forEach(function(code) {
 									code.highlight(_this3.options.highlight);
 								});
 								this.viedi.update(_viedi2.default.sources.SILENT);
@@ -10564,7 +10564,7 @@
 							};
 						}()
 					};
-					a_exports.CodeBlock = SyntaxCodeBlock;
+					a_exports.Pre = SyntaxPre;
 					a_exports.CodeToken = CodeToken;
 					a_exports.default = Syntax;
 				},
@@ -10945,7 +10945,7 @@
 						'blockquote': a_mload('emm75'),
 						'bold': a_mload('emm76'),
 						'clean': a_mload('emm77'),
-						'code-block': a_mload('emm78'),
+						'pre': a_mload('i_pre'),
 						'color': a_mload('emm79'),
 						'direction': {
 							'': a_mload('emm80'),
@@ -11136,6 +11136,11 @@
 				emm100: function(a_module, a_exports)
 				{
 					a_module.exports = "<svg viewbox=\"0 0 18 18\"> <rect class=viedi-stroke height=12 width=12 x=3 y=3></rect> <rect class=viedi-fill height=12 width=1 x=5 y=3></rect> <rect class=viedi-fill height=12 width=1 x=12 y=3></rect> <rect class=viedi-fill height=2 width=8 x=5 y=8></rect> <rect class=viedi-fill height=1 width=3 x=3 y=5></rect> <rect class=viedi-fill height=1 width=3 x=3 y=7></rect> <rect class=viedi-fill height=1 width=3 x=3 y=10></rect> <rect class=viedi-fill height=1 width=3 x=3 y=12></rect> <rect class=viedi-fill height=1 width=3 x=12 y=5></rect> <rect class=viedi-fill height=1 width=3 x=12 y=7></rect> <rect class=viedi-fill height=1 width=3 x=12 y=10></rect> <rect class=viedi-fill height=1 width=3 x=12 y=12></rect> </svg>";
+				},
+				/* new */
+				i_pre: function(a_module, a_exports)
+				{
+					a_module.exports = "<svg viewbox=\"0 0 18 18\"> <path class=viedi-fill d=\"M 4.5742188 1.2753906 L 0.85546875 2.625 C 0.72963118 3.3766305 1.7281814 3.3350408 2.1914062 3.5898438 L 4.5742188 4.4550781 C 4.7511168 3.7006119 3.7446131 3.6973455 3.2753906 3.4667969 L 1.5820312 2.8671875 L 4.5742188 1.8027344 L 4.5742188 1.2753906 z M 10.884766 5.5957031 C 10.822572 5.5917802 10.754375 5.6108161 10.6875 5.6582031 C 9.7936948 5.4458285 8.7992519 6.9761564 8.3261719 5.765625 C 7.4131089 6.2119522 8.0470266 7.4579781 7.8730469 8.2714844 L 7.8730469 11.400391 C 9.4682449 11.436881 8.6822371 9.4351309 8.7167969 8.4667969 C 8.3486021 6.7554437 10.527921 6.7061416 11.167969 6.0332031 C 11.212226 5.8191083 11.071347 5.6074719 10.884766 5.5957031 z M 3.9238281 5.6425781 C 3.1056798 5.6462143 2.2484941 6.8534145 1.8183594 5.7636719 C 0.90867288 6.2153832 1.541035 7.4570355 1.3671875 8.2714844 L 1.3671875 13.533203 C 2.8159142 13.823547 2.1784202 11.761339 2.28125 10.917969 C 2.3769509 10.422752 3.2039064 11.821009 3.8769531 11.537109 C 5.0383398 11.628809 6.1595731 10.750306 6.2773438 9.5761719 C 6.7194866 8.0065991 6.0061084 5.6804015 4.0859375 5.6582031 C 4.0318777 5.646701 3.9783712 5.6423357 3.9238281 5.6425781 z M 14.402344 5.6484375 C 14.351544 5.6499175 14.298181 5.6527931 14.246094 5.6582031 C 12.258543 5.5030949 10.972334 7.8809165 11.59375 9.6171875 C 12.072327 11.315543 14.046666 11.772409 15.552734 11.542969 C 16.486691 11.483069 16.787935 9.8438091 15.580078 10.644531 C 14.407559 11.077252 12.609067 10.634299 12.509766 9.1757812 C 13.16992 8.426677 14.313011 8.9493832 15.216797 8.8183594 L 16.693359 8.8183594 C 16.92036 7.4049412 15.977152 5.602452 14.402344 5.6484375 z M 14.523438 6.4023438 C 15.799428 6.3897918 16.448607 8.3018886 14.441406 8.2695312 C 12.918874 8.412057 11.756923 7.4231832 13.433594 6.6015625 C 13.685237 6.4742211 13.974127 6.4101294 14.255859 6.4394531 C 14.349479 6.4158891 14.438372 6.4031807 14.523438 6.4023438 z M 3.765625 6.4257812 C 3.796766 6.4252823 3.8291552 6.4279675 3.8613281 6.4296875 C 5.5825064 6.6190378 5.7983205 8.959298 5.0585938 10.183594 C 3.8826374 11.64916 1.7358734 9.9402369 2.2851562 8.3515625 C 2.3308253 7.5079551 2.8002856 6.4412525 3.765625 6.4257812 z M 12.951172 13.697266 C 12.774293 14.451756 13.780757 14.455111 14.25 14.685547 L 15.945312 15.285156 L 12.951172 16.349609 C 12.838121 17.17814 13.855372 16.505688 14.246094 16.40625 L 16.669922 15.527344 C 16.795763 14.775713 15.797209 14.817303 15.333984 14.5625 L 12.951172 13.697266 z \" /> </svg>";
 				},
 				/* 101 */
 				emm101: function(a_module, a_exports, a_mload)
@@ -12566,7 +12571,6 @@
 					a_exports.default = SnowTheme;
 				}
 			}
-			//]
 		)
 	}
 )

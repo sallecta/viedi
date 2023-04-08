@@ -1,7 +1,7 @@
 forked from https://github.com/quilljs/quill
 ## Demonstration
 
-https://rawcdn.githack.com/sallecta/viedi/abbcd216dc5e1ccf50de0294ccd3c48efc155e72/viedi/viedi.html
+https://rawcdn.githack.com/sallecta/viedi/362848c118f8665f05c8e2febde5b9cafb468752/viedi/viedi.html
 
 
 ## License

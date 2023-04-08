@@ -662,7 +662,7 @@
 }
 .viedi-bubble .viedi-picker-label::before {
   display: inline-block;
-  line-height: 22px;
+  line-height: 24px;
 }
 .viedi-bubble .viedi-picker-options {
   background-color: #444;
